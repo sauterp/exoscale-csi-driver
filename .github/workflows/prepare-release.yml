@@ -1,0 +1,28 @@
+name: prepare-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: "New release tag to create"
+        required: true
+        type: string
+
+jobs:
+  prepare-release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: make go.mk
+      - run: |
+          git fetch --tags
+          git config --global user.email "operation+build@exoscale.ch"
+          git config --global user.name "Exoscale"
+      - run: "make prepare-release NEW_VERSION=${{ inputs.release-tag }}"
+      - run: |
+          git push
+          git push --tags
