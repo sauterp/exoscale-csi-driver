@@ -1,8 +1,12 @@
 # Changelog
 
 
+## v0.31.2
+- 6256a63 Prepare release
+- 7055425 workflow_call
+
 ## v0.31.1
-- 55643e7 Prepare release
+- e3840d5 Prepare release
 - e5957bd test 1
 
 ## v0.31.0
