@@ -26,3 +26,6 @@ jobs:
       - run: |
           git push
           git push --tags
+
+  call-release-workflow:
+    uses: ./.github/workflows/release.yml
