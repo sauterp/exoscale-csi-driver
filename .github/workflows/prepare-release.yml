@@ -15,6 +15,9 @@ jobs:
     permissions:
       contents: write
 
+    outputs:
+      output1: ${{ steps.release_commit.outputs.current_ref }}
+
     steps:
       - uses: actions/checkout@v4
       - run: make go.mk
@@ -23,7 +26,8 @@ jobs:
           git config --global user.email "operation+build@exoscale.ch"
           git config --global user.name "Exoscale"
       - run: "make prepare-release NEW_VERSION=${{ inputs.release-tag }}"
-      - run: |
+      - id: release_commit
+        run: |
           git push
           git push --tags
           CURRENT_REF=$(git log -1 --format='%H')
