@@ -26,6 +26,11 @@ jobs:
       - run: |
           git push
           git push --tags
+          CURRENT_REF=$(git log -1 --format='%H')
+          echo "current_ref=$CURRENT_REF" >> "$GITHUB_OUTPUT"
+        shell: bash
 
   call-release-workflow:
-    uses: ./.github/workflows/release.yml
+    needs: prepare-release
+    # since the prepare-release job creates a new commit we have to pass the ref of the new commit to the called workflow
+    uses: ./.github/workflows/release.yml@${{needs.prepare-release.outputs.current_ref}}
