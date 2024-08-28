@@ -1,6 +1,7 @@
 name: release
 
 on:
+  workflow_call: # Make it possible for this workflow to be triggered by the prepare-release workflow when it pushes a release tag.
   push:
     tags:
       - 'v[0-9]+\.[0-9]+\.[0-9]+'
